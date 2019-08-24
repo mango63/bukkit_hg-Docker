@@ -1,0 +1,47 @@
+# -------------------------------------------------------------------------------------------
+# 
+#  Your file has been automatically updated at 14.08.2019 17:58:40
+#  to ChatControl 8.3.10
+# 
+#  Unfortunatelly, due to how Bukkit saves all .yml files, it was not possible
+#  preserve the documentation comments in your file. We apologize.
+# 
+#  If you'd like to view the default file, you can either:
+#  a) Open the ChatControl-8.3.10.jar with a WinRar or similar
+#  b) or, visit: https://github.com/kangarko/ChatControl/wiki
+# 
+# -------------------------------------------------------------------------------------------
+
+advertisement:
+  Bypass_With_Permission: chatcontrol.bypass.ad
+  Ignored_In_Commands:
+  - //
+  - /brush
+  - /auction
+  - /register
+  - /reg
+  - /login
+  - /l
+  Player_Warn_Message: '&7Please do not advertise other websites or IP adresses.'
+  Console_Message: '%player violated rule ID %ruleID, triggered %handler filter with:
+    %message'
+  Block_Message: true
+  Write_To_File: logs/advertisements.txt
+  Staff_Alert: 'chatcontrol.notify.ad &8[&7Ad/ID %ruleID&8] &7%player: &f%message'
+swear:
+  Bypass_With_Permission: chatcontrol.bypass.swear
+  Ignored_In_Commands:
+  - //
+  - /brush
+  - /auction
+  - /register
+  - /reg
+  - /login
+  - /l
+  Player_Warn_Message: '&cPlease Choose better language , otherwise an action will
+    be taken!'
+  Console_Message: '%player violated rule ID %ruleID, triggered %handler filter with:
+    %message'
+  Block_Message: true
+  Write_To_File: logs/swears.txt
+  Staff_Alert: 'chatcontrol.notify.swear &8[&7Swear/ID %ruleID&8] &7%player: &f%message'

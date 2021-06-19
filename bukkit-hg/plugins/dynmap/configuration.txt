@@ -13,7 +13,7 @@
 #   The definitions of these templates are in normal-hi_boost_vhi.txt, nether-hi_boost_vhi.txt, and the_end-hi_boost_vhi.txt
 # To use the HDMap hi-res (16 ppb) map templates, with support for boosting resolution selectively to xhi-res (64 ppb), set value to hi_boost_xhi
 #   The definitions of these templates are in normal-hi_boost_xhi.txt, nether-hi_boost_xhi.txt, and the_end-hi_boost_xhi.txt
-deftemplatesuffix: hires
+deftemplatesuffix: hi_boost_xhi
 
 # Map storage scheme: only uncomment one 'type' value
 #  filetree: classic and default scheme: tree of files, with all map data under the directory indicated by 'tilespath' setting
@@ -25,7 +25,7 @@ storage:
   # SQLite db for map storage (uses dbfile as storage location)
   #type: sqlite
   #dbfile: dynmap.db
-  # MySQL DB for map storage (at 'hostname':'port' with flags "flags" in database 'database' using user 'userid' password 'password' and table prefix 'prefix')
+  # MySQL DB for map storage (at 'hostname':'port' in database 'database' using user 'userid' password 'password' and table prefix 'prefix'
   #type: mysql
   #hostname: localhost
   #port: 3306
@@ -33,7 +33,6 @@ storage:
   #userid: dynmap
   #password: dynmap
   #prefix: ""
-  #flags: "?allowReconnect=true"
   
 components:
   - class: org.dynmap.ClientConfigurationComponent
@@ -176,14 +175,31 @@ components:
     hidey: false
     show-mcr: false
     
-  # Note: more than one logo component can be defined
-  #- class: org.dynmap.ClientComponent
-  #  type: logo
-  #  text: "Dynmap"
-  #  #logourl: "images/block_surface.png"
-  #  linkurl: "http://forums.bukkit.org/threads/dynmap.489/"
-  #  # Valid positions: top-left, top-right, bottom-left, bottom-right
-  #  position: bottom-right
+   # Note: more than one logo component can be defined
+  - class: org.dynmap.ClientComponent
+    type: logo
+    text: "PAX"
+    logourl: "pax.png"
+    linkurl: "http://www.paxaustralia.com.au"
+    Valid positions: top-left, top-right, bottom-left, bottom-right
+    position: bottom-left
+
+  - class: org.dynmap.ClientComponent
+    type: logo
+    text: "LANSLIDE"
+    logourl: "lanslide_logo.png"
+    linkurl: "https://www.lanslide.com.au"
+    Valid positions: top-left, top-right, bottom-left, bottom-right
+    position: bottom-right
+
+  - class: org.dynmap.ClientComponent
+    type: logo
+    text: "RFLAN"
+    logourl: "rflan_logo.png"
+    linkurl: "https://www.rflan.org"
+    Valid positions: top-left, top-right, bottom-left, bottom-right
+    position: bottom-right
+
 
   #- class: org.dynmap.ClientComponent
   #  type: inactive
@@ -279,6 +295,11 @@ custom-colors-support: true
 # Customize URL used for fetching player skins (%player% is macro for name)
 skin-url: "http://skins.minecraft.net/MinecraftSkins/%player%.png"
 
+# Control behavior for new (1.0+) compass orientation (sunrise moved 90 degrees: east is now what used to be south)
+#   default is 'newrose' (preserve pre-1.0 maps, rotate rose)
+#   'newnorth' is used to rotate maps and rose (requires fullrender of any HDMap map - same as 'newrose' for FlatMap or KzedMap)
+compass-mode: newnorth
+
 render-triggers:
   #- playermove
   #- playerjoin
@@ -299,7 +320,7 @@ render-triggers:
   #- blockredstone
 
 # Title for the web page - if not specified, defaults to the server's name (unless it is the default of 'Unknown Server')
-#webpage-title: "My Awesome Server Map"
+webpage-title: "Lan Server Map"
 
 # The path where the tile-files are placed.
 tilespath: web/tiles
@@ -400,8 +421,8 @@ check-banned-ips: true
 
 # Default selection when map page is loaded
 defaultzoom: 0
-defaultworld: world
-defaultmap: flat
+defaultworld: HungerGames
+defaultmap: surface
 # (optional) Zoom level and map to switch to when following a player, if possible
 #followzoom: 3
 #followmap: surface
@@ -440,7 +461,16 @@ url:
     #tiles: "tiles/"
     # markers base URL
     #markers: "tiles/"
-
+    
+# Spout support controls
+spout:
+    # If false, ignore spout even if detected
+    enabled: true
+    # If true, previously loaded textures will be assumed to still be valid (faster startup, but
+    # can result in stale textures if originals are updated - delete files in texturepacks/standard/spoout
+    # to clean cached textures and force reload on next startup)
+    use-existing-textures: true
+    
 # Customization commands - allows scripts to be run before/after certain events
 custom-commands:
     image-updates:
@@ -463,10 +493,3 @@ verbose: false
 #  - class: org.dynmap.debug.LogDebugger
 # Debug: dump blocks missing render data
 dump-missing-blocks: false
-
-# Have dynmap migrate old chunks to the new format for the current MC version (specifically, for migrating pre-1.13 chunks to 1.13 or 1.14).  This is needed
-# in order to render chunks on an upgraded server (due to various bugs/limitations in CB/spigot 1.13+).  This setting is NOT suggested to be enabled full time,
-# but only long enough to do a fullrender of a migrated world - it should be turned back off once worlds are migrated).  It is EXPERIMENTAL, so be sure to backup
-# your worlds before running with this setting enabled (set to true)
-#
-#migrate-chunks: true

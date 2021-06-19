@@ -1,8 +1,0 @@
-[14.08.2019 18:46:06] Mango63: [Handler=swear, Rule ID=UNSET] shit
-[14.08.2019 18:46:10] Mango63: [Handler=swear, Rule ID=UNSET] nigger
-[14.08.2019 18:46:21] Mango63: [Handler=swear, Rule ID=UNSET] this server is fucked
-[14.08.2019 18:46:26] Mango63: [Handler=swear, Rule ID=UNSET] this server is shit
-[14.08.2019 18:46:29] Mango63: [Handler=swear, Rule ID=UNSET] niggar
-[14.08.2019 18:46:42] Mango63: [Handler=swear, Rule ID=UNSET] arab
-[18.08.2019 16:41:25] Mango63: [Handler=swear, Rule ID=UNSET] fuck
-[18.08.2019 16:41:32] Mango63: [Handler=swear, Rule ID=UNSET] shit

@@ -1,12 +1,14 @@
 FROM base:latest AS jdk
-ARG bukkit_version=1.14.4
+ARG bukkit_version=1.17
 ENV BUKKIT_VERSION=${bukkit_version}
-ARG java_version=8
+ARG java_version=16
 ENV JAVA_VERSION=${java_version}
 # todo: collapse these to single command
-RUN apt-get install -y software-properties-common \ 
+RUN sed --in-place --regexp-extended "s/(\/\/)(archive\.ubuntu)/\1au.\2/" /etc/apt/sources.list \
+    && apt-get install -y software-properties-common \ 
     && apt-add-repository ppa:openjdk-r/ppa && \
        apt-get update
+RUN apt-get install -y ca-certificates-java
 RUN echo "yes" | apt-get install -y openjdk-${JAVA_VERSION}-jdk
 RUN adduser bukkit && mkdir /bukkit && chown bukkit:bukkit /bukkit -R
 WORKDIR /bukkit
@@ -18,12 +20,42 @@ USER bukkit
 RUN wget -O BuildTools.jar \
     https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar && \
     java -jar BuildTools.jar --rev $BUKKIT_VERSION
+RUN wget -O ess.zip https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/*zip*/jars.zip
+RUN unzip ess.zip
+RUN wget -O join.zip https://jenkins.sirblobman.xyz/job/SirBlobman/job/Join%20Commands/lastSuccessfulBuild/artifact/target/*zip*/target.zip
+RUN unzip join.zip
+RUN wget -O mv.zip http://ci.onarandombox.com/job/Multiverse-Core/lastSuccessfulBuild/artifact/target/*zip*/target.zip
+RUN unzip mv.zip
+RUN wget -O proto.zip https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/target/*zip*/target.zip
+RUN unzip proto.zip
+RUN wget -O luckPerm.zip https://ci.lucko.me/view/LuckPerms/job/LuckPerms/lastSuccessfulBuild/artifact/bukkit/loader/build/libs/*zip*/libs.zip
+RUN unzip luckPerm.zip
+RUN wget https://dynmap.us/releases/Dynmap-3.2-beta-1-spigot.jar
+RUN wget https://github.com/kangarko/ChatControl-Pro/releases/download/8.10.6/ChatControl.Pro.zip
+RUN unzip ChatControl.Pro.zip
+RUN wget https://github.com/ShaneBeeStudios/HungerGames/releases/download/4.15.6/HungerGames-4.15.6.jar
+RUN wget https://bitbucket.org/kangarko/nashornplus/downloads/NashornPlus-1.1.0.jar
 
 FROM jdk as final
-ADD server.properties commands.yml start.sh advertise.py eula.txt /bukkit/
+ADD server.properties commands.yml start.sh advertise.py /bukkit/
 COPY HungerGames HungerGames/
 COPY plugins plugins/
+COPY --from=build /build/HungerGames-*.jar plugins/
+COPY --from=build /build/ChatControl-*.jar plugins/
+COPY --from=build /build/NashornPlus-*.jar plugins/
 COPY --from=build /build/spigot-*.jar .
+COPY --from=build /build/Dynmap*.jar plugins/
+COPY --from=build /build/target/ProtocolLib*.jar plugins/
+COPY --from=build /build/target/Multiverse-Core-*-SNAPSHOT.jar plugins/
+COPY --from=build /build/target/JoinCommands-*.jar plugins/
+COPY --from=build /build/jars/EssentialsX-*.jar plugins/
+COPY --from=build /build/jars/EssentialsXAntiBuild*.jar plugins/
+COPY --from=build /build/jars/EssentialsXChat*.jar plugins/
+COPY --from=build /build/jars/EssentialsXProtect*.jar plugins/
+COPY --from=build /build/jars/EssentialsXSpawn*.jar plugins/
+COPY --from=build /build/libs/LuckPerms-Bukkit*.jar plugins/
+RUN echo "eula=true" > eula.txt
+
 RUN apt-get install nano
 RUN chown bukkit:bukkit * -R
 USER bukkit

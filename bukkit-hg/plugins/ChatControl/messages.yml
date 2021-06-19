@@ -54,33 +54,33 @@ Broadcaster:
   # NOTE: You can use JSON formats you create in formatting.yml here, just type the name of the format
   #       directly on the line :)
   #
-  Messages: 
+  Messages:
     #
     # Messages set as 'global' are displayed in all worlds.
     #
-    global: 
+    global:
       - Hey, {player}, did you know that we are running ChatControl?
-      - 'Check out &ahttps://spigotmc.org/resources/10258'
+      - "Check out &ahttps://spigotmc.org/resources/10258"
     # 
     # Messages for 'hardcore' world. The world receives both global messages and these specified below.
     #
-    hardcore: 
+    hardcore:
       - Grief is not permitted what-so-ever and every griefer will be banned.
       - Can you survive the night on {world} world?
     #
     # This world receives messages included in the hardcore world.
     #
-    hardcore_nether: 
+    hardcore_nether:
       - includeFrom hardcore
     #
     # No messages will be broadcasted in this world.
     #
-    ignored-world: 
+    ignored-world:
       - excludeGlobal
     # 
     # No global messages will be displayed here.
     #
-    creative: 
+    creative:
       - excludeGlobal
       - 'Welcome on Creative world. Enjoy your gamemode :)'
       - |-
@@ -123,11 +123,11 @@ Join_Message:
   # Rules for displaying custom different messages. 
   # [NOTICE] They are processed in alphabetical order according to names.
   #
-  Conditions: 
+  Conditions:
     #
     # The name if the condition sets it order. They are ordered alphabetically.
     #
-    hells_message: 
+    hells_message:
       #
       # Either specify one gamemode or a list. Numbers and names are supported.
       #
@@ -141,25 +141,28 @@ Join_Message:
       #
       Message: '&8[&2+&8] &7Welcome to &chell &7{player}!'
 
-    anniversary_message: 
+    anniversary_message:
       #
       # You can also specify a Javascript condition.
+      #
+      # [TIP] If you want the message show for the first join only, use
+      #       !player.hasPlayedBefore()
       #
       Condition: 'player.getStatistic(Java.type("org.bukkit.Statistic").LEAVE_GAME) == 99'
       #
       # An example of only one message, but multi-lined.
       #
-      Message: |- 
-               &6~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-               &e&l{player} &ejoined the server 100th time!
-               &6~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      
-    staff_message: 
+      Message: |-
+        &6~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        &e&l{player} &ejoined the server 100th time!
+        &6~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    staff_message:
       #
       # Permission player must have for messages below when they join.
       #
       Permission: "chatcontrol.joinmessage.staff"
-      
+
       Message:
         - '&8[&2+&8] &7Welcome &b{player} &7to the server!'
         - '&8[&2+&8] &7Bless &9{player} &7for joining!'
@@ -178,13 +181,13 @@ Quit_Message:
   # Do not send the message if the player is vanished? Most vanish plugins are supported.
   #
   Ignore_Vanished: true
-  
+
   Message: default
-  
-  Conditions: 
-    staff_message: 
+
+  Conditions:
+    staff_message:
       Permission: "chatcontrol.joinmessage.staff"
-      
+
       Message:
         - '&8[&4-&8] &b{player} &7left the server'
         - '&8[&4-&8] &9{player} &7just quit the game. Good bye!'
@@ -196,14 +199,14 @@ Quit_Message:
 # Only works if the plugin that is kicking your player do not change the message.
 # THIS IS RARELY USED IN BUKKIT, BECAUSE BAN MANAGEMENT PLUGINS HANDLE IT IN THEIR OWN WAY
 # -----------------------------------------------------------------------------------------
-Kick_Message: 
+Kick_Message:
   #
   # Set to true to enable custom quit messages.
   #
   Enabled: false
 
   Message: default
-  
+
   # You don't need to specify conditions if you don't need to.
 
 # -----------------------------------------------------------------------------------------
@@ -211,7 +214,7 @@ Kick_Message:
 #
 # Thanks to c0wg0d for contributions and examples.
 # -----------------------------------------------------------------------------------------
-Death_Messages: 
+Death_Messages:
   #
   # Set to true to enable custom death messages.
   #
@@ -247,15 +250,15 @@ Death_Messages:
   #
   # Here you can customize the {killer} and {killer_item} variable's translations.
   #
-  Translate: 
+  Translate:
     Skeleton: Mighty Skeleton
     Wither Skeleton: Withered Skeleton
     Diamond Sword: Sword of Death
-    
+
   #
   # The default message if it's not recognized by any cause.
   #
-  Default: 
+  Default:
     Message:
       - '&e{player} &7was blindsided by an unknown force'
       - '&e{player} &7has died of unknown causes'
@@ -462,7 +465,7 @@ Death_Messages:
         Killer_Item: RAW_FISH
         Message:
           - '&c{player} &7was trout slapped by {killer}&7''s {killer_item}!'
-          
+
       pvp_wood_sword:
         Killer: PLAYER
         #
@@ -477,7 +480,7 @@ Death_Messages:
         Killer_Item: '*_AXE'
         Message:
           - '&c{player} &7asked {killer}&7''s {killer_item} a terrible knock knock joke'
-          
+
       pvp_x: # The _x is just for the plugin to recognize this as the last condition.
         Killer: PLAYER
         #
@@ -674,7 +677,7 @@ Death_Messages:
         Killer: PLAYER
         Message:
           - '&e{player} &7was killed by {killer}''s deadly potion'
-    
+
       witchs_potion:
         Killer: WITCH
         Message:
@@ -714,4 +717,3 @@ Death_Messages:
   Dryout:
     Message:
       - '&e{player} &7has dried out'
-      
